@@ -1,0 +1,5 @@
+name: ${pom.artifactId}
+main: ${pom.groupId}.${pom.artifactId}
+version: "${pom.version}"
+api: ["1.0.9"]
+author: IWareQ
