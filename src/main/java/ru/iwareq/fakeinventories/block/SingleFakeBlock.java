@@ -1,7 +1,6 @@
 package ru.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.Block;
 import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.NBTIO;
@@ -15,12 +14,12 @@ import java.util.List;
 
 public class SingleFakeBlock extends FakeBlock {
 
-	private final Block block;
+	private final int blockId;
 	private final String tileId;
 	private List<Vector3> lastPosition;
 
-	public SingleFakeBlock(Block block, String tileId) {
-		this.block = block;
+	public SingleFakeBlock(int blockId, String tileId) {
+		this.blockId = blockId;
 		this.tileId = tileId;
 	}
 
@@ -30,8 +29,7 @@ public class SingleFakeBlock extends FakeBlock {
 		this.lastPosition = positions;
 		for (Vector3 position : positions) {
 			UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
-			// updateBlockPacket.blockRuntimeId = this.block.getFullId();
-			updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(Block.CHEST, 0);
+			updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(this.blockId, 0);
 			updateBlockPacket.flags = UpdateBlockPacket.FLAG_NETWORK;
 			updateBlockPacket.x = position.getFloorX();
 			updateBlockPacket.y = position.getFloorY();

@@ -11,8 +11,8 @@ import java.util.List;
 
 public class DoubleFakeBlock extends SingleFakeBlock {
 
-	public DoubleFakeBlock(Block block, String tileId) {
-		super(block, tileId);
+	public DoubleFakeBlock(int blockId, String tileId) {
+		super(blockId, tileId);
 	}
 
 	@Override
@@ -39,6 +39,8 @@ public class DoubleFakeBlock extends SingleFakeBlock {
 
 	@Override
 	protected CompoundTag getBlockEntityDataAt(Vector3 position, String title) {
-		return super.getBlockEntityDataAt(position, title).putInt("pairx", position.getFloorX() + ((position.getFloorX() & 1) == 1 ? 1 : -1)).putInt("pairz", position.getFloorZ());
+		return super.getBlockEntityDataAt(position, title)
+				.putInt("pairx", position.getFloorX() + ((position.getFloorX() & 1) == 1 ? 1 : -1))
+				.putInt("pairz", position.getFloorZ());
 	}
 }
