@@ -3,10 +3,10 @@ package ru.iwareq.fakeinventories.block;
 import cn.nukkit.Player;
 import cn.nukkit.math.Vector3;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-public abstract class AFakeBlock {
+public abstract class FakeBlock {
 
 	public abstract void sendBlocks(Player player, String title);
 
@@ -15,9 +15,10 @@ public abstract class AFakeBlock {
 	public List<Vector3> getPositions(Player player) {
 		Vector3 blockPosition = player.getPosition().add(this.getOffset(player)).floor();
 		if (blockPosition.getFloorY() >= 0 && blockPosition.getFloorY() < 256) {
-			return Arrays.asList(blockPosition);
+			return Collections.singletonList(blockPosition);
 		}
-		return null;
+
+		return Collections.emptyList();
 	}
 
 	protected Vector3 getOffset(Player player) {

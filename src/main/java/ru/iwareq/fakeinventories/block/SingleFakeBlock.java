@@ -2,6 +2,7 @@ package ru.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.block.Block;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -12,11 +13,11 @@ import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.List;
 
-public class SingleFakeBlock extends AFakeBlock {
+public class SingleFakeBlock extends FakeBlock {
 
 	private final Block block;
-	private List<Vector3> lastPosition;
 	private final String tileId;
+	private List<Vector3> lastPosition;
 
 	public SingleFakeBlock(Block block, String tileId) {
 		this.block = block;
@@ -26,49 +27,47 @@ public class SingleFakeBlock extends AFakeBlock {
 	@Override
 	public void sendBlocks(Player player, String title) {
 		List<Vector3> positions = this.getPositions(player);
-		if (positions != null) {
-			this.lastPosition = positions;
-			for (Vector3 position : positions) {
-				UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
-				updateBlockPacket.blockRuntimeId = this.block.getFullId();
-				updateBlockPacket.flags = UpdateBlockPacket.FLAG_NETWORK;
-				updateBlockPacket.x = position.getFloorX();
-				updateBlockPacket.y = position.getFloorY();
-				updateBlockPacket.z = position.getFloorZ();
-				player.dataPacket(updateBlockPacket);
+		this.lastPosition = positions;
+		for (Vector3 position : positions) {
+			UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
+			// updateBlockPacket.blockRuntimeId = this.block.getFullId();
+			updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(Block.CHEST, 0);
+			updateBlockPacket.flags = UpdateBlockPacket.FLAG_NETWORK;
+			updateBlockPacket.x = position.getFloorX();
+			updateBlockPacket.y = position.getFloorY();
+			updateBlockPacket.z = position.getFloorZ();
+			player.dataPacket(updateBlockPacket);
 
-				BlockEntityDataPacket blockEntityDataPacket = new BlockEntityDataPacket();
-				blockEntityDataPacket.x = position.getFloorX();
-				blockEntityDataPacket.y = position.getFloorY();
-				blockEntityDataPacket.z = position.getFloorZ();
-				try {
-					blockEntityDataPacket.namedTag = NBTIO.write(this.getBlockEntityDataAt(position, title), ByteOrder.LITTLE_ENDIAN, true);
-				} catch (IOException exception) {
-					exception.printStackTrace();
-				}
-				player.dataPacket(blockEntityDataPacket);
+			BlockEntityDataPacket blockEntityDataPacket = new BlockEntityDataPacket();
+			blockEntityDataPacket.x = position.getFloorX();
+			blockEntityDataPacket.y = position.getFloorY();
+			blockEntityDataPacket.z = position.getFloorZ();
+			try {
+				blockEntityDataPacket.namedTag = NBTIO.write(this.getBlockEntityDataAt(position, title), ByteOrder.LITTLE_ENDIAN, true);
+			} catch (IOException exception) {
+				exception.printStackTrace();
 			}
+
+			player.dataPacket(blockEntityDataPacket);
 		}
 	}
 
 	@Override
 	public void removeBlocks(Player player) {
-		if (this.lastPosition != null) {
-			for (Vector3 position : this.lastPosition) {
-				UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
-				updateBlockPacket.blockRuntimeId = player.getLevel().getBlock(position).getFullId();
-				updateBlockPacket.flags = UpdateBlockPacket.FLAG_NETWORK;
-				updateBlockPacket.x = position.getFloorX();
-				updateBlockPacket.y = position.getFloorY();
-				updateBlockPacket.z = position.getFloorZ();
-				player.dataPacket(updateBlockPacket);
-			}
+		for (Vector3 position : this.lastPosition) {
+			UpdateBlockPacket packet = new UpdateBlockPacket();
+			packet.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(player.getLevel().getBlock(position).getFullId());
+			packet.flags = UpdateBlockPacket.FLAG_NETWORK;
+			packet.x = position.getFloorX();
+			packet.y = position.getFloorY();
+			packet.z = position.getFloorZ();
+			player.dataPacket(packet);
 		}
 	}
 
 	protected CompoundTag getBlockEntityDataAt(Vector3 position, String title) {
 		return new CompoundTag()
-			   .putString("id", tileId)
-			   .putString("CustomName", title);
+				.putString("id", tileId)
+				.putString("CustomName", title);
 	}
 }

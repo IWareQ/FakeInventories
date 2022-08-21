@@ -1,5 +1,5 @@
-name: ${pom.artifactId}
-main: ${pom.groupId}.${pom.artifactId}
+name: FakeInventories
+main: ru.iwareq.fakeinventories.FakeInventories
 version: "${pom.version}"
-api: ["1.0.9"]
+api: 1.0.13
 author: IWareQ
