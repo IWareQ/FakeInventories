@@ -88,6 +88,9 @@ public class CustomInventory extends BaseInventory {
 	}
 
 	public void handle(int slot, Item item, InventoryTransactionEvent event) {
-		this.listeners.getOrDefault(slot, this.defaultListener).accept(item, this, event);
+		TriConsumer<Item, CustomInventory, InventoryTransactionEvent> listener = this.listeners.getOrDefault(slot, this.defaultListener);
+		if (listener != null) {
+			listener.accept(item, this, event);
+		}
 	}
 }

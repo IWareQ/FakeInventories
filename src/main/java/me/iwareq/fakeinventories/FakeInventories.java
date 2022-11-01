@@ -19,8 +19,10 @@ public class FakeInventories extends PluginBase {
 		return FAKE_BLOCKS.get(inventoryType);
 	}
 
-	@Override()
+	@Override
 	public void onEnable() {
+		this.getServer().getPluginManager().registerEvents(new InventoriesListener(), this);
+
 		FAKE_BLOCKS.put(InventoryType.CHEST, new SingleFakeBlock(Block.CHEST, BlockEntity.CHEST));
 		FAKE_BLOCKS.put(InventoryType.ENDER_CHEST, new SingleFakeBlock(Block.ENDER_CHEST, BlockEntity.ENDER_CHEST));
 		FAKE_BLOCKS.put(InventoryType.DOUBLE_CHEST, new DoubleFakeBlock(Block.CHEST, BlockEntity.CHEST));

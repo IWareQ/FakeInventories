@@ -1,7 +1,6 @@
 package me.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 
@@ -39,10 +38,8 @@ public class DoubleFakeBlock extends SingleFakeBlock {
 
 	@Override
 	protected CompoundTag getBlockEntityDataAt(Vector3 position, String title) {
-		CompoundTag compoundTag = super.getBlockEntityDataAt(position, title)
+		return super.getBlockEntityDataAt(position, title)
 				.putInt("pairx", position.getFloorX() + ((position.getFloorX() & 1) == 1 ? 1 : -1))
 				.putInt("pairz", position.getFloorZ());
-		Server.getInstance().broadcastMessage("position: " + position + ", pair pos: " + position.add((position.getFloorX() & 1) == 1 ? 1 : -1));
-		return compoundTag;
 	}
 }
