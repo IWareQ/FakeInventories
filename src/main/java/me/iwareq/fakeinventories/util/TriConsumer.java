@@ -1,4 +1,4 @@
-package ru.iwareq.fakeinventories.util;
+package me.iwareq.fakeinventories.util;
 
 @FunctionalInterface
 public interface TriConsumer<K, V, S> {

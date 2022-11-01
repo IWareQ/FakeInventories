@@ -1,12 +1,12 @@
-package ru.iwareq.fakeinventories;
+package me.iwareq.fakeinventories;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.plugin.PluginBase;
-import ru.iwareq.fakeinventories.block.DoubleFakeBlock;
-import ru.iwareq.fakeinventories.block.FakeBlock;
-import ru.iwareq.fakeinventories.block.SingleFakeBlock;
+import me.iwareq.fakeinventories.block.DoubleFakeBlock;
+import me.iwareq.fakeinventories.block.FakeBlock;
+import me.iwareq.fakeinventories.block.SingleFakeBlock;
 
 import java.util.HashMap;
 import java.util.Map;

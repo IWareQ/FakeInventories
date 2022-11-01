@@ -1,4 +1,4 @@
-package ru.iwareq.fakeinventories.block;
+package me.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.level.GlobalBlockPalette;
@@ -14,9 +14,9 @@ import java.util.List;
 
 public class SingleFakeBlock extends FakeBlock {
 
-	private final int blockId;
-	private final String tileId;
-	private List<Vector3> lastPosition;
+	protected final int blockId;
+	protected final String tileId;
+	protected List<Vector3> lastPositions;
 
 	public SingleFakeBlock(int blockId, String tileId) {
 		this.blockId = blockId;
@@ -24,9 +24,11 @@ public class SingleFakeBlock extends FakeBlock {
 	}
 
 	@Override
-	public void sendBlocks(Player player, String title) {
+	public void create(Player player, String title) {
 		List<Vector3> positions = this.getPositions(player);
-		this.lastPosition = positions;
+
+		this.lastPositions = positions;
+
 		for (Vector3 position : positions) {
 			UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
 			updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(this.blockId, 0);
@@ -51,8 +53,8 @@ public class SingleFakeBlock extends FakeBlock {
 	}
 
 	@Override
-	public void removeBlocks(Player player) {
-		for (Vector3 position : this.lastPosition) {
+	public void remove(Player player) {
+		for (Vector3 position : this.lastPositions) {
 			UpdateBlockPacket packet = new UpdateBlockPacket();
 			packet.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(player.getLevel().getBlock(position).getFullId());
 			packet.flags = UpdateBlockPacket.FLAG_NETWORK;

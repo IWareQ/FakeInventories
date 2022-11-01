@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>ru.iwareq.fakeinventories</groupId>
+	<groupId>me.iwareq.fakeinventories</groupId>
 	<artifactId>FakeInventories</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -16,12 +16,12 @@
 	</properties>
 
 	<build>
-		<defaultGoal>clean install</defaultGoal>
+		<defaultGoal>clean package</defaultGoal>
 		<resources>
 			<resource>
 				<targetPath>.</targetPath>
 				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources/</directory>
+				<directory>${pom.basedir}/src/main/resources/</directory>
 				<includes>
 					<include>plugin.yml</include>
 				</includes>
@@ -30,7 +30,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>3.4.0</version>
 				<configuration>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
 				</configuration>
@@ -47,13 +47,6 @@
 	</build>
 
 	<repositories>
-		<repository>
-			<id>opencollab-repo-release</id>
-			<url>https://repo.opencollab.dev/maven-releases/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 		<repository>
 			<id>opencollab-repo-snapshot</id>
 			<url>https://repo.opencollab.dev/maven-snapshots/</url>

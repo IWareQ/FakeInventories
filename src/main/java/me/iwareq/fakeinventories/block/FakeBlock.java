@@ -1,4 +1,4 @@
-package ru.iwareq.fakeinventories.block;
+package me.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.math.Vector3;
@@ -8,9 +8,9 @@ import java.util.List;
 
 public abstract class FakeBlock {
 
-	public abstract void sendBlocks(Player player, String title);
+	public abstract void create(Player player, String title);
 
-	public abstract void removeBlocks(Player player);
+	public abstract void remove(Player player);
 
 	public List<Vector3> getPositions(Player player) {
 		Vector3 blockPosition = player.getPosition().add(this.getOffset(player)).floor();

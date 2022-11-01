@@ -1,4 +1,4 @@
-package ru.iwareq.fakeinventories;
+package me.iwareq.fakeinventories;
 
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.EventPriority;
@@ -10,7 +10,7 @@ import cn.nukkit.item.Item;
 
 public class InventoriesListener implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onInventoryTransaction(InventoryTransactionEvent event) {
 		for (InventoryAction action : event.getTransaction().getActions()) {
 			if (action instanceof SlotChangeAction) {
