@@ -67,10 +67,10 @@ public class CustomInventory extends BaseInventory {
 		this.fakeBlock.remove(player);
 	}
 
-	public void setItem(int slot, Item item, ItemHandler handler) {
-		this.setItem(slot, item);
+	public void setItem(int index, Item item, ItemHandler handler) {
+		this.setItem(index, item);
 
-		this.handlers.put(slot, handler);
+		this.handlers.put(index, handler);
 	}
 
 	public void setDefaultItemHandler(ItemHandler handler) {
@@ -86,10 +86,10 @@ public class CustomInventory extends BaseInventory {
 		this.title = title;
 	}
 
-	public void handle(int slot, Item item, InventoryTransactionEvent event) {
-		ItemHandler handler = this.handlers.getOrDefault(slot, this.defaultItemHandler);
+	public void handle(int index, Item item, InventoryTransactionEvent event) {
+		ItemHandler handler = this.handlers.getOrDefault(index, this.defaultItemHandler);
 		if (handler != null) {
-			handler.handle(item, this, event);
+			handler.handle(item, event);
 		}
 	}
 }

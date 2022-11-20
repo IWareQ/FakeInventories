@@ -7,29 +7,26 @@ your custom virtual inventories with ease.
 
 ## Usage
 
-You can extend from CustomInventory
-
 ```java
-import me.iwareq.fakeinventories.CustomInventory;
+CustomInventory inventory=new CustomInventory(InventoryType.CHEST,"custom title");
 
-public class MyInventory extends CustomInventory {
+		inventory.setDefaultItemHandler((item,event)->{
+		event.setCancelled(true);
 
-    public MyInventory() {
-        super(InventoryType.CHEST, "my title");
-    }
-}
-``` 
+		Player target=event.getTransaction().getSource();
 
-or create a new CustomInventory object.
+		target.sendMessage("is default item handler");
+		});
 
-```java
-CustomInventory inventory = new CustomInventory(InventoryType.CHEST);
+		inventory.setItem(5,Item.get(Item.DIAMOND),((item,event)->{
+		event.setCancelled(true);
+
+		Player target=event.getTransaction().getSource();
+
+		target.sendMessage("is custom item handler");
+
+		target.removeWindow(inventory);
+		}));
+
+		player.addWindow(inventory);
 ```
-
-To open your inventory, use `Player.addWindow(inventory);` or to close, use `Player.removeWindow(inventory);`
-
-For handling items, use `CustomInventory.setItem(int slot, Item item, TriConsumer<Item, Custom Inventory, 
-InventoryTransactionEvent> listener);`
-
-You can also set a handler for all items that don't have a handler.
-`CustomInventory.setDefaultListener(TriConsumer<Item, CustomInventory, InventoryTransactionEvent> listener)`
