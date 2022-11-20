@@ -10,18 +10,18 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.ContainerClosePacket;
 import cn.nukkit.network.protocol.ContainerOpenPacket;
 import me.iwareq.fakeinventories.block.FakeBlock;
-import me.iwareq.fakeinventories.util.TriConsumer;
+import me.iwareq.fakeinventories.util.ItemHandler;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CustomInventory extends BaseInventory {
 
-	private final Map<Integer, TriConsumer<Item, CustomInventory, InventoryTransactionEvent>> listeners = new HashMap<>();
+	private final Map<Integer, ItemHandler> handlers = new HashMap<>();
 
 	private final FakeBlock fakeBlock;
 	private String title;
-	private TriConsumer<Item, CustomInventory, InventoryTransactionEvent> defaultListener;
+	private ItemHandler defaultItemHandler;
 
 	public CustomInventory(InventoryType inventoryType) {
 		this(inventoryType, null);
@@ -43,7 +43,6 @@ public class CustomInventory extends BaseInventory {
 			packet.windowId = player.getWindowId(this);
 			packet.type = this.getType().getNetworkType();
 
-			// Bad idea
 			Vector3 position = this.fakeBlock.getPositions(player).get(0);
 			packet.x = position.getFloorX();
 			packet.y = position.getFloorY();
@@ -68,14 +67,14 @@ public class CustomInventory extends BaseInventory {
 		this.fakeBlock.remove(player);
 	}
 
-	public void setItem(int slot, Item item, TriConsumer<Item, CustomInventory, InventoryTransactionEvent> listener) {
+	public void setItem(int slot, Item item, ItemHandler handler) {
 		this.setItem(slot, item);
 
-		this.listeners.put(slot, listener);
+		this.handlers.put(slot, handler);
 	}
 
-	public void setDefaultListener(TriConsumer<Item, CustomInventory, InventoryTransactionEvent> listener) {
-		this.defaultListener = listener;
+	public void setDefaultItemHandler(ItemHandler handler) {
+		this.defaultItemHandler = handler;
 	}
 
 	@Override
@@ -88,9 +87,9 @@ public class CustomInventory extends BaseInventory {
 	}
 
 	public void handle(int slot, Item item, InventoryTransactionEvent event) {
-		TriConsumer<Item, CustomInventory, InventoryTransactionEvent> listener = this.listeners.getOrDefault(slot, this.defaultListener);
-		if (listener != null) {
-			listener.accept(item, this, event);
+		ItemHandler handler = this.handlers.getOrDefault(slot, this.defaultItemHandler);
+		if (handler != null) {
+			handler.handle(item, this, event);
 		}
 	}
 }

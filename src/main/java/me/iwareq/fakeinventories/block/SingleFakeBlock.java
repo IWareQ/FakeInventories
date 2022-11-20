@@ -29,7 +29,7 @@ public class SingleFakeBlock extends FakeBlock {
 
 		this.lastPositions = positions;
 
-		for (Vector3 position : positions) {
+		positions.forEach(position -> {
 			UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
 			updateBlockPacket.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(this.blockId, 0);
 			updateBlockPacket.flags = UpdateBlockPacket.FLAG_NETWORK;
@@ -49,12 +49,12 @@ public class SingleFakeBlock extends FakeBlock {
 			}
 
 			player.dataPacket(blockEntityDataPacket);
-		}
+		});
 	}
 
 	@Override
 	public void remove(Player player) {
-		for (Vector3 position : this.lastPositions) {
+		this.lastPositions.forEach(position -> {
 			UpdateBlockPacket packet = new UpdateBlockPacket();
 			packet.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(player.getLevel().getBlock(position).getFullId());
 			packet.flags = UpdateBlockPacket.FLAG_NETWORK;
@@ -62,7 +62,7 @@ public class SingleFakeBlock extends FakeBlock {
 			packet.y = position.getFloorY();
 			packet.z = position.getFloorZ();
 			player.dataPacket(packet);
-		}
+		});
 	}
 
 	protected CompoundTag getBlockEntityDataAt(Vector3 position, String title) {

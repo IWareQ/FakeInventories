@@ -8,12 +8,12 @@ import me.iwareq.fakeinventories.block.DoubleFakeBlock;
 import me.iwareq.fakeinventories.block.FakeBlock;
 import me.iwareq.fakeinventories.block.SingleFakeBlock;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class FakeInventories extends PluginBase {
 
-	private static final Map<InventoryType, FakeBlock> FAKE_BLOCKS = new HashMap<>();
+	private static final Map<InventoryType, FakeBlock> FAKE_BLOCKS = new EnumMap<>(InventoryType.class);
 
 	public static FakeBlock getFakeBlock(InventoryType inventoryType) {
 		return FAKE_BLOCKS.get(inventoryType);
