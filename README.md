@@ -8,25 +8,25 @@ your custom virtual inventories with ease.
 ## Usage
 
 ```java
-CustomInventory inventory=new CustomInventory(InventoryType.CHEST,"custom title");
+CustomInventory inventory = new CustomInventory(InventoryType.CHEST, "custom title");
 
-		inventory.setDefaultItemHandler((item,event)->{
-		event.setCancelled(true);
+inventory.setDefaultItemHandler((item, event) -> {
+    event.setCancelled(true);
 
-		Player target=event.getTransaction().getSource();
+    Player target = event.getTransaction().getSource();
 
-		target.sendMessage("is default item handler");
-		});
+    target.sendMessage("is default item handler");
+});
 
-		inventory.setItem(5,Item.get(Item.DIAMOND),((item,event)->{
-		event.setCancelled(true);
+inventory.setItem(5, Item.get(Item.DIAMOND), (item, event) -> {
+    event.setCancelled(true);
 
-		Player target=event.getTransaction().getSource();
+    Player target = event.getTransaction().getSource();
 
-		target.sendMessage("is custom item handler");
+    target.sendMessage("is custom item handler");
 
-		target.removeWindow(inventory);
-		}));
+    target.removeWindow(inventory);
+});
 
-		player.addWindow(inventory);
+player.addWindow(inventory);
 ```
