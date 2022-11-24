@@ -96,6 +96,7 @@ public class CustomInventory extends BaseInventory {
 					}
 				}
 			}
+
 			if (itemSlots.isEmpty()) {
 				break;
 			}
