@@ -18,7 +18,7 @@ inventory.setDefaultItemHandler((item, event) -> {
     target.sendMessage("is default item handler");
 });
 
-inventory.addItem(Item.get(Item.IRON_BLOCK), (item, event) -> {
+inventory.addItem((item, event) -> {
     event.setCancelled(true);
 
     Player target = event.getTransaction().getSource();
@@ -26,7 +26,7 @@ inventory.addItem(Item.get(Item.IRON_BLOCK), (item, event) -> {
     target.sendMessage("is custom item handler in addItem method");
     
     target.removeWindow(inventory);
-})
+}, Item.get(Item.IRON_BLOCK), Item.get(Item.IRON_BAR))
 
 inventory.setItem(5, Item.get(Item.DIAMOND), (item, event) -> {
     event.setCancelled(true);
