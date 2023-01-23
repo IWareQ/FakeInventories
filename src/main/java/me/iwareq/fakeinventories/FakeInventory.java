@@ -14,7 +14,7 @@ import me.iwareq.fakeinventories.util.ItemHandler;
 
 import java.util.*;
 
-public class CustomInventory extends BaseInventory {
+public class FakeInventory extends BaseInventory {
 
 	private final Map<Integer, ItemHandler> handlers = new HashMap<>();
 
@@ -22,11 +22,11 @@ public class CustomInventory extends BaseInventory {
 	private String title;
 	private ItemHandler defaultItemHandler;
 
-	public CustomInventory(InventoryType inventoryType) {
+	public FakeInventory(InventoryType inventoryType) {
 		this(inventoryType, null);
 	}
 
-	public CustomInventory(InventoryType inventoryType, String title) {
+	public FakeInventory(InventoryType inventoryType, String title) {
 		super(null, inventoryType);
 
 		this.title = title == null ? inventoryType.getDefaultTitle() : title;
@@ -89,7 +89,9 @@ public class CustomInventory extends BaseInventory {
 					if (amount > 0) {
 						slot.setCount(slot.getCount() - amount);
 						item.setCount(item.getCount() + amount);
+
 						this.setItem(i, item, handler);
+
 						if (slot.getCount() <= 0) {
 							itemSlots.remove(slot);
 						}
@@ -106,12 +108,17 @@ public class CustomInventory extends BaseInventory {
 			for (int slotIndex : emptySlots) {
 				if (!itemSlots.isEmpty()) {
 					Item slot = itemSlots.get(0);
+
 					int amount = Math.min(slot.getMaxStackSize(), slot.getCount());
 					amount = Math.min(amount, this.getMaxStackSize());
+
 					slot.setCount(slot.getCount() - amount);
+
 					Item item = slot.clone();
 					item.setCount(amount);
+
 					this.setItem(slotIndex, item, handler);
+
 					if (slot.getCount() <= 0) {
 						itemSlots.remove(slot);
 					}
@@ -123,9 +130,9 @@ public class CustomInventory extends BaseInventory {
 	}
 
 	public void setItem(int index, Item item, ItemHandler handler) {
-		super.setItem(index, item);
-
-		this.handlers.put(index, handler);
+		if (super.setItem(index, item)) {
+			this.handlers.put(index, handler);
+		}
 	}
 
 	public void setDefaultItemHandler(ItemHandler handler) {

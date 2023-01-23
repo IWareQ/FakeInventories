@@ -8,7 +8,7 @@ your custom virtual inventories with ease.
 ## Usage
 
 ```java
-CustomInventory inventory = new CustomInventory(InventoryType.CHEST, "custom title");
+FakeInventory inventory = new FakeInventory(InventoryType.CHEST, "custom title");
 
 inventory.setDefaultItemHandler((item, event) -> {
     event.setCancelled(true);
@@ -18,7 +18,7 @@ inventory.setDefaultItemHandler((item, event) -> {
     target.sendMessage("is default item handler");
 });
 
-inventory.addItem((item, event) -> {
+inventory.addItems((item, event) -> {
     event.setCancelled(true);
 
     Player target = event.getTransaction().getSource();
