@@ -6,7 +6,7 @@
 
 	<groupId>me.iwareq.fakeinventories</groupId>
 	<artifactId>FakeInventories</artifactId>
-	<version>1.1.3</version>
+	<version>1.1.4</version>
 
 	<properties>
 		<maven.compiler.source>8</maven.compiler.source>
@@ -48,11 +48,9 @@
 
 	<repositories>
 		<repository>
-			<id>opencollab-repo-snapshot</id>
-			<url>https://repo.opencollab.dev/maven-snapshots/</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>opencollab-repository-maven-snapshots</id>
+			<name>Opencollab Repository</name>
+			<url>https://repo.opencollab.dev/maven-snapshots</url>
 		</repository>
 	</repositories>
 

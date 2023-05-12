@@ -38,8 +38,9 @@ public class DoubleFakeBlock extends SingleFakeBlock {
 
 	@Override
 	protected CompoundTag getBlockEntityDataAt(Vector3 position, String title) {
+		int pairX = (position.getFloorX() & 1) == 1 ? 1 : -1;
 		return super.getBlockEntityDataAt(position, title)
-				.putInt("pairx", position.getFloorX() + ((position.getFloorX() & 1) == 1 ? 1 : -1))
+				.putInt("pairx", position.getFloorX() + pairX)
 				.putInt("pairz", position.getFloorZ());
 	}
 }

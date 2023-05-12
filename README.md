@@ -59,6 +59,6 @@ player.addWindow(inventory);
 <dependency>
     <groupId>com.github.IWareQ</groupId>
     <artifactId>FakeInventories</artifactId>
-    <version>Tag</version>
+    <version>Version</version>
 </dependency>
 ```

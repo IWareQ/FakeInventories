@@ -16,7 +16,12 @@ public class FakeInventories extends PluginBase {
 	private static final Map<InventoryType, FakeBlock> FAKE_BLOCKS = new EnumMap<>(InventoryType.class);
 
 	public static FakeBlock getFakeBlock(InventoryType inventoryType) {
-		return FAKE_BLOCKS.get(inventoryType);
+		FakeBlock fakeBlock = FAKE_BLOCKS.get(inventoryType);
+		if (fakeBlock == null) {
+			throw new NullPointerException("Fake block for: " + inventoryType.name() + " not found");
+		}
+
+		return fakeBlock;
 	}
 
 	@Override

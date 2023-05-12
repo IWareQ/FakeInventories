@@ -150,8 +150,6 @@ public class FakeInventory extends BaseInventory {
 
 	public void handle(int index, Item item, InventoryTransactionEvent event) {
 		ItemHandler handler = this.handlers.getOrDefault(index, this.defaultItemHandler);
-		if (handler != null) {
-			handler.handle(item, event);
-		}
+		handler.handle(item, event);
 	}
 }

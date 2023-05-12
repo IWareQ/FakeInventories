@@ -16,6 +16,7 @@ public class InventoriesListener implements Listener {
 				SlotChangeAction slotChange = (SlotChangeAction) action;
 				if (slotChange.getInventory() instanceof FakeInventory) {
 					FakeInventory inventory = (FakeInventory) slotChange.getInventory();
+
 					int slot = slotChange.getSlot();
 					Item sourceItem = action.getSourceItem();
 					inventory.handle(slot, sourceItem, event);
