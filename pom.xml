@@ -48,6 +48,11 @@
 
 	<repositories>
 		<repository>
+			<id>opencollab-repository-maven-releases</id>
+			<name>Opencollab Repository</name>
+			<url>https://repo.opencollab.dev/maven-releases</url>
+		</repository>
+		<repository>
 			<id>opencollab-repository-maven-snapshots</id>
 			<name>Opencollab Repository</name>
 			<url>https://repo.opencollab.dev/maven-snapshots</url>
