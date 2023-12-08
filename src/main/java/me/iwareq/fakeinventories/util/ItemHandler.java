@@ -6,5 +6,5 @@ import cn.nukkit.item.Item;
 @FunctionalInterface
 public interface ItemHandler {
 
-	void handle(Item item, InventoryTransactionEvent event);
+    void handle(Item item, InventoryTransactionEvent event);
 }

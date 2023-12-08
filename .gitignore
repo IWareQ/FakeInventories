@@ -1,2 +1,5 @@
-.idea
-target
+/.gradle/
+/.idea/
+/build/
+
+FakeInventories.iml
