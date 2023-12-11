@@ -2,7 +2,13 @@ package me.iwareq.fakeinventories;
 
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntity;
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.EventPriority;
+import cn.nukkit.event.Listener;
+import cn.nukkit.event.inventory.InventoryTransactionEvent;
 import cn.nukkit.inventory.InventoryType;
+import cn.nukkit.inventory.transaction.action.SlotChangeAction;
+import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginBase;
 import me.iwareq.fakeinventories.block.DoubleFakeBlock;
 import me.iwareq.fakeinventories.block.FakeBlock;
@@ -11,9 +17,15 @@ import me.iwareq.fakeinventories.block.SingleFakeBlock;
 import java.util.EnumMap;
 import java.util.Map;
 
-public class FakeInventories extends PluginBase {
+public class FakeInventories extends PluginBase implements Listener {
 
     private static final Map<InventoryType, FakeBlock> FAKE_BLOCKS = new EnumMap<>(InventoryType.class);
+
+    private static FakeInventories instance;
+
+    public static FakeInventories getInstance() {
+        return instance;
+    }
 
     public static FakeBlock getFakeBlock(InventoryType inventoryType) {
         FakeBlock fakeBlock = FAKE_BLOCKS.get(inventoryType);
@@ -39,6 +51,22 @@ public class FakeInventories extends PluginBase {
 
     @Override
     public void onEnable() {
-        this.getServer().getPluginManager().registerEvents(new InventoriesListener(), this);
+        this.getServer().getPluginManager().registerEvents(this, this);
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onInventoryTransaction(InventoryTransactionEvent event) {
+        event.getTransaction().getActions().forEach(action -> {
+            if (action instanceof SlotChangeAction) {
+                SlotChangeAction slotChange = (SlotChangeAction) action;
+                if (slotChange.getInventory() instanceof FakeInventory) {
+                    FakeInventory inventory = (FakeInventory) slotChange.getInventory();
+
+                    int slot = slotChange.getSlot();
+                    Item sourceItem = action.getSourceItem();
+                    inventory.handle(slot, sourceItem, event);
+                }
+            }
+        });
     }
 }

@@ -38,7 +38,7 @@ public class FakeInventory extends BaseInventory {
     public void onOpen(Player player) {
         this.fakeBlock.create(player, this.getTitle());
 
-        Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
+        Server.getInstance().getScheduler().scheduleDelayedTask(FakeInventories.getInstance(), () -> {
             ContainerOpenPacket packet = new ContainerOpenPacket();
             packet.windowId = player.getWindowId(this);
             packet.type = this.getType().getNetworkType();
@@ -64,7 +64,7 @@ public class FakeInventory extends BaseInventory {
 
         super.onClose(player);
 
-        Server.getInstance().getScheduler().scheduleDelayedTask(() -> {
+        Server.getInstance().getScheduler().scheduleDelayedTask(FakeInventories.getInstance(), () -> {
             this.fakeBlock.remove(player);
         }, 5);
     }
