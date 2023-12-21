@@ -10,6 +10,7 @@ import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.inventory.transaction.action.SlotChangeAction;
 import cn.nukkit.item.Item;
 import cn.nukkit.plugin.PluginBase;
+import lombok.Getter;
 import me.iwareq.fakeinventories.block.DoubleFakeBlock;
 import me.iwareq.fakeinventories.block.FakeBlock;
 import me.iwareq.fakeinventories.block.SingleFakeBlock;
@@ -21,11 +22,8 @@ public class FakeInventories extends PluginBase implements Listener {
 
     private static final Map<InventoryType, FakeBlock> FAKE_BLOCKS = new EnumMap<>(InventoryType.class);
 
+    @Getter
     private static FakeInventories instance;
-
-    public static FakeInventories getInstance() {
-        return instance;
-    }
 
     public static FakeBlock getFakeBlock(InventoryType inventoryType) {
         FakeBlock fakeBlock = FAKE_BLOCKS.get(inventoryType);

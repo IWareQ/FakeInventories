@@ -2,8 +2,8 @@ plugins {
     id("java")
 }
 
-group = "me.iwareq"
-version = "1.1.7"
+group = "me.iwareq.fakeinventories"
+version = "1.1.8"
 
 repositories {
     mavenCentral()
@@ -13,6 +13,9 @@ repositories {
 
 dependencies {
     implementation("cn.nukkit:nukkit:1.0-SNAPSHOT")
+
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 tasks.withType<JavaCompile> {

@@ -7,21 +7,18 @@ import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.BlockEntityDataPacket;
 import cn.nukkit.network.protocol.UpdateBlockPacket;
+import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class SingleFakeBlock extends FakeBlock {
 
     protected final int blockId;
     protected final String tileId;
     protected List<Vector3> lastPositions;
-
-    public SingleFakeBlock(int blockId, String tileId) {
-        this.blockId = blockId;
-        this.tileId = tileId;
-    }
 
     @Override
     public void create(Player player, String title) {

@@ -1,6 +1,6 @@
 name: FakeInventories
 main: me.iwareq.fakeinventories.FakeInventories
-version: '${version}'
+version: ${version}
 api: 1.0.13
 author: IWareQ
 load: STARTUP

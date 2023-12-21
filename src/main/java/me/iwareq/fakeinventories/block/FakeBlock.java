@@ -1,6 +1,7 @@
 package me.iwareq.fakeinventories.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.level.DimensionData;
 import cn.nukkit.math.Vector3;
 
 import java.util.Collections;
@@ -14,7 +15,8 @@ public abstract class FakeBlock {
 
     public List<Vector3> getPositions(Player player) {
         Vector3 blockPosition = player.getPosition().add(this.getOffset(player)).floor();
-        if (blockPosition.getFloorY() >= 0 && blockPosition.getFloorY() < 256)
+        DimensionData dimensionData = player.getLevel().getDimensionData();
+        if (blockPosition.getFloorY() >= dimensionData.getMinHeight() && blockPosition.getFloorY() < dimensionData.getMaxHeight())
             return Collections.singletonList(blockPosition);
 
         return Collections.emptyList();
