@@ -7,6 +7,7 @@ group = "me.iwareq.fakeinventories"
 version = "1.1.8"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven("https://repo.opencollab.dev/maven-releases")
     maven("https://repo.opencollab.dev/maven-snapshots")
